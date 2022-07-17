@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/senouy/alyra-ropsten-tp3/static/css/main.65dba936.chunk.css",
+    "main.js": "/senouy/alyra-ropsten-tp3/static/js/main.ce198df4.chunk.js",
+    "main.js.map": "/senouy/alyra-ropsten-tp3/static/js/main.ce198df4.chunk.js.map",
+    "runtime-main.js": "/senouy/alyra-ropsten-tp3/static/js/runtime-main.620ac81d.js",
+    "runtime-main.js.map": "/senouy/alyra-ropsten-tp3/static/js/runtime-main.620ac81d.js.map",
+    "static/js/2.de0b3e0a.chunk.js": "/senouy/alyra-ropsten-tp3/static/js/2.de0b3e0a.chunk.js",
+    "static/js/2.de0b3e0a.chunk.js.map": "/senouy/alyra-ropsten-tp3/static/js/2.de0b3e0a.chunk.js.map",
+    "index.html": "/senouy/alyra-ropsten-tp3/index.html",
+    "static/css/main.65dba936.chunk.css.map": "/senouy/alyra-ropsten-tp3/static/css/main.65dba936.chunk.css.map",
+    "static/js/2.de0b3e0a.chunk.js.LICENSE.txt": "/senouy/alyra-ropsten-tp3/static/js/2.de0b3e0a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.620ac81d.js",
+    "static/js/2.de0b3e0a.chunk.js",
+    "static/css/main.65dba936.chunk.css",
+    "static/js/main.ce198df4.chunk.js"
+  ]
+}
