@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/alyra-ropsten-tp3/static/css/main.65dba936.chunk.css",
-    "main.js": "/alyra-ropsten-tp3/static/js/main.d3454dd6.chunk.js",
-    "main.js.map": "/alyra-ropsten-tp3/static/js/main.d3454dd6.chunk.js.map",
+    "main.css": "/alyra-ropsten-tp3/static/css/main.33d2e147.chunk.css",
+    "main.js": "/alyra-ropsten-tp3/static/js/main.09619b70.chunk.js",
+    "main.js.map": "/alyra-ropsten-tp3/static/js/main.09619b70.chunk.js.map",
     "runtime-main.js": "/alyra-ropsten-tp3/static/js/runtime-main.20237f12.js",
     "runtime-main.js.map": "/alyra-ropsten-tp3/static/js/runtime-main.20237f12.js.map",
-    "static/js/2.2f061ac9.chunk.js": "/alyra-ropsten-tp3/static/js/2.2f061ac9.chunk.js",
-    "static/js/2.2f061ac9.chunk.js.map": "/alyra-ropsten-tp3/static/js/2.2f061ac9.chunk.js.map",
+    "static/js/2.4437c0d8.chunk.js": "/alyra-ropsten-tp3/static/js/2.4437c0d8.chunk.js",
+    "static/js/2.4437c0d8.chunk.js.map": "/alyra-ropsten-tp3/static/js/2.4437c0d8.chunk.js.map",
     "index.html": "/alyra-ropsten-tp3/index.html",
-    "static/css/main.65dba936.chunk.css.map": "/alyra-ropsten-tp3/static/css/main.65dba936.chunk.css.map",
-    "static/js/2.2f061ac9.chunk.js.LICENSE.txt": "/alyra-ropsten-tp3/static/js/2.2f061ac9.chunk.js.LICENSE.txt"
+    "static/css/main.33d2e147.chunk.css.map": "/alyra-ropsten-tp3/static/css/main.33d2e147.chunk.css.map",
+    "static/js/2.4437c0d8.chunk.js.LICENSE.txt": "/alyra-ropsten-tp3/static/js/2.4437c0d8.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.20237f12.js",
-    "static/js/2.2f061ac9.chunk.js",
-    "static/css/main.65dba936.chunk.css",
-    "static/js/main.d3454dd6.chunk.js"
+    "static/js/2.4437c0d8.chunk.js",
+    "static/css/main.33d2e147.chunk.css",
+    "static/js/main.09619b70.chunk.js"
   ]
 }
