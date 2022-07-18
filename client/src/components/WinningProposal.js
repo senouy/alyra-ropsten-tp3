@@ -3,21 +3,35 @@ import * as CONSTANTS from "./../constants";
 
 export default class WinningProposal extends React.Component {
     
-    state = { winningProposalDescription: null}
-    isVoter = false
+    state = {winningProposalDescription: null};
 
-    constructor(props) {
-      super(props);
-      this.isVoter = props.userRole === CONSTANTS.USER_ROLE.VOTER;
+    componentDidMount(){
+      const isVoter = this.props.userRole === CONSTANTS.USER_ROLE.VOTER;
+
+      if(isVoter){
+        this.props.contract.methods.getOneProposal(parseInt(this.props.winningProposalID)).call({from: this.props.accounts[0]}).then(
+          (result) => {
+            this.setState({winningProposalDescription : result.description});
+          }
+          );
+        
+      }
     }
-    
-    componentDidMount = async () => {
-        if(this.isVoter){
-            let winningProposal = await this.props.contract.methods.getOneProposal(parseInt(this.props.winningProposalID)).call({from: this.props.accounts[0]});
-            this.setState({winningProposalDescription : winningProposal.description});
+
+    componentDidUpdate(prevProps){
+      if(prevProps.userRole !==  this.props.userRole){
+        const isVoter = this.props.userRole === CONSTANTS.USER_ROLE.VOTER;
+        
+        if(isVoter){
+          this.props.contract.methods.getOneProposal(parseInt(this.props.winningProposalID)).call({from: this.props.accounts[0]}).then(
+            (result) => {
+              this.setState({winningProposalDescription : result.description});
+            }
+            );
         }
-    }
-    
+      }
+    } 
+
     render(){
         const renderWinningProposal = () => {
           if (this.props.worflowstatus === CONSTANTS.WORKFLOW_STATUS.VOTES_TALLIED) {
@@ -32,7 +46,9 @@ export default class WinningProposal extends React.Component {
         }
 
         const renderProposalDescription = () => {
-            if (this.isVoter) {
+            const isVoter = this.props.userRole === CONSTANTS.USER_ROLE.VOTER;
+
+            if (isVoter) {
               return <div id="winning-proposal-description">{this.state.winningProposalDescription}</div>;
             } else {
               return ;

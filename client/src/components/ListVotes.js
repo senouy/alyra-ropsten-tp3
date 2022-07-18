@@ -18,16 +18,24 @@ export default class ListVotes extends React.Component {
         const renderContent = () => {
           if (this.props.listVote.length > 0) {
             return <table>
-                    {this.props.listVote.map( (vote) => (
-                      <tr>
-                        <td>{vote.returnValues.proposalId}</td>
-                        <td>{vote.returnValues.voter}</td>
-                      </tr>
-                      ))}
+                      <thead>
+                          <tr>
+                            <th>ID Prop</th>
+                            <th>Adresse</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {this.props.listVote.map( (vote) => (
+                          <tr>
+                            <td>{vote.returnValues._proposalId}</td>
+                            <td>{vote.returnValues._voter}</td>
+                          </tr>
+                          ))}
+                        </tbody>
                   </table>;
           }
           else{
-            return "Pas de vote enregistré"
+            return <em>"Pas de vote enregistré"</em>
           }
         }
 

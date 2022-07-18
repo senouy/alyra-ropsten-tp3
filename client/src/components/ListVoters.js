@@ -16,14 +16,14 @@ export default class ListVoters extends React.Component {
                         </thead>
                         <tbody>
                           {this.props.listVoterAddress.map( (address, index) => (
-                          <tr><td>{index+1}</td><td>{address.returnValues.voterAddress}</td></tr>
+                          <tr><td>{index+1}</td><td>{address.returnValues._voterAddress}</td></tr>
                           ))}
                         </tbody>
                       </table>
                     </div>;
           }
           else{
-            return "Pas de votant enregistré"
+            return <em>"Pas de votant enregistré"</em>
           }
         }
 

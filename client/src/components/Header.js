@@ -15,16 +15,29 @@ export default class Header extends React.Component {
     }
 
     render(){
-        return(
-            <header className="header">
-                <h1>Voting Dapp</h1>
-            
-                    Mon role <span style={{'font-weight':'bold'}}>{this.getRoleString()} - {this.props.addr}</span>
-                
-                <div id="error-message" className="hide">
-                    Error
-                </div>
-            </header>
+        const renderHeader = () => {
+            if (this.props.addr === null) {
+              return <div>
+                        <h1>Voting Dapp</h1>
+                    
+                        Veuillez connecter votre wallet    
+                    </div>;
+            } 
+            return <div>
+                        <h1>Voting Dapp</h1>
+                    
+                            Mon role <span style={{fontWeight:'bold'}}>{this.getRoleString()} - {this.props.addr}</span>
+                        
+                        
+                    </div>;
+        }
+
+        return( <header className="header">
+                    {renderHeader()}
+                    <div id="toast-message" className="hide">
+                        Error
+                    </div>
+                </header>
         )
     }
 }

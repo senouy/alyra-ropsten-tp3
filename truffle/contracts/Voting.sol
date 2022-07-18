@@ -4,8 +4,8 @@ pragma solidity 0.8.15;
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 /// @title Full voting process
-/// @author Cyril Castagnet
-/// @notice You can use this contract for only in a beta mode
+/// @author Cyril Castagnet & Ghofrane Ben Younes
+/// @notice You can use this contract only in a beta mode
 /// @dev This contract hasn't been audited yet, please be carreful when using it
 contract Voting is Ownable {
 
@@ -32,14 +32,16 @@ contract Voting is Ownable {
     }
 
     WorkflowStatus public workflowStatus;
-    Proposal[] proposalsArray;
+    Proposal[100] proposalsArray;
+    uint nbProposalsAdded;
     mapping (address => Voter) voters;
 
 
-    event VoterRegistered(address voterAddress); 
-    event WorkflowStatusChange(WorkflowStatus previousStatus, WorkflowStatus newStatus);
-    event ProposalRegistered(uint proposalId);
-    event Voted (address voter, uint proposalId);
+    event VoterRegistered(address _voterAddress); 
+    event WorkflowStatusChange(WorkflowStatus _previousStatus, WorkflowStatus _newStatus);
+    event ProposalRegistered(uint _proposalId);
+    event Voted (address _voter, uint _proposalId);
+    event LogDepositReceived(address _addr);
 
     /// @dev Use this modifier when a function must be called only by a whitelisted voter
     modifier onlyVoters() {
@@ -80,17 +82,18 @@ contract Voting is Ownable {
 
     /// @notice Add proposal only if you are a voter & voters are limited to add 100 proposals in total
     /// @param _desc Description of the proposal to add
-    /// @dev We have limited the number of proposals in order to avoid DDos attack
+    /// @dev We have limited the number of proposals in order to avoid DDoS attack
     function addProposal(string memory _desc) external onlyVoters {
         require(workflowStatus == WorkflowStatus.ProposalsRegistrationStarted, 'Proposals are not allowed yet');
-        require(proposalsArray.length < 100, 'Le quota maximum de proposition est atteint');
+        require(nbProposalsAdded < 5, 'Le quota maximum de proposition est atteint');
         require(keccak256(abi.encode(_desc)) != keccak256(abi.encode("")), 'Vous ne pouvez pas ne rien proposer'); // facultatif
         // voir que desc est different des autres
 
         Proposal memory proposal;
         proposal.description = _desc;
-        proposalsArray.push(proposal);
-        emit ProposalRegistered(proposalsArray.length-1);
+        proposalsArray[nbProposalsAdded] = proposal;
+        emit ProposalRegistered(nbProposalsAdded);
+        nbProposalsAdded++;
     }
 
     // ::::::::::::: VOTE ::::::::::::: //
@@ -140,6 +143,7 @@ contract Voting is Ownable {
     }
 
     /// @notice Iterate on all votes and designate winning proposal
+    /// @dev don't worry about DDoS atack while iterate on proposalsArray, we have limited the number of elements
    function tallyVotes() external onlyOwner {
        require(workflowStatus == WorkflowStatus.VotingSessionEnded, "Current status is not voting session ended");
        uint _winningProposalId;
@@ -153,4 +157,5 @@ contract Voting is Ownable {
        workflowStatus = WorkflowStatus.VotesTallied;
        emit WorkflowStatusChange(WorkflowStatus.VotingSessionEnded, WorkflowStatus.VotesTallied);
     }
+
 }

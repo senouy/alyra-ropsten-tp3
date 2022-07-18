@@ -9,8 +9,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: calc(10px + 1vmin);
   color: white;
+}
+
+h3{
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
 }
 
 th, td{
@@ -48,14 +54,21 @@ button:hover{
   display:none;
 }
 
-#error-message{
+#toast-message{
   color: #fff;
-  background-color: rgb(231, 62, 62);
   position: fixed;
-  right: 5px;
+  left: 5px;
   top: 5px;
   min-width: 200px;
   padding: 10px 15px;
+}
+
+#toast-message.error-message{
+  background-color: rgb(231, 62, 62);
+}
+
+#toast-message.info-message{
+  background-color: rgb(119, 194, 255);
 }
 
 .main-container{
@@ -82,7 +95,7 @@ button:hover{
 }
 
 #winning-proposal-description{
-  background-color: #e1ef07;
+  background-color: #279f36;
   color: #fff;
   text-align: center;
   padding: 20px;

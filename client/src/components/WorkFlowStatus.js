@@ -3,13 +3,6 @@ import * as CONSTANTS from "./../constants";
 
 export default class WorkFlowStatus extends React.Component {
 
-    isOwner = false
-
-    constructor(props) {
-        super(props);
-        this.isOwner = props.userRole === CONSTANTS.USER_ROLE.OWNER;
-    }
-
     getStatusString(){
         switch(this.props.worflowstatus){
             case CONSTANTS.WORKFLOW_STATUS.REGISTERING_VOTERS: 
@@ -30,9 +23,10 @@ export default class WorkFlowStatus extends React.Component {
     }
 
     render(){
+        const isOwner = this.props.userRole === CONSTANTS.USER_ROLE.OWNER;
         //Display button to switch status only for the owner and if the voting process is not finished yet
         const renderButtonSwitchStep = () => {
-            if (this.isOwner && this.props.worflowstatus !== CONSTANTS.WORKFLOW_STATUS.VOTES_TALLIED) {
+            if (isOwner && this.props.worflowstatus !== CONSTANTS.WORKFLOW_STATUS.VOTES_TALLIED) {
               return <div>
                         <button onClick={this.props.switchStatus}>Passer à l'étape suivante</button>
                     </div>;

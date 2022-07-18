@@ -12,3 +12,9 @@ export const USER_ROLE = {
     VOTER: 2,
     OWNER: 3
 }
+
+export const TOAST_MESSAGE_TYPE = {
+    SUCCESS: "success-message",
+    INFO: "info-message",
+    ERROR: "error-message"
+}

@@ -19,11 +19,10 @@ class App extends Component {
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
-      const web3 = await getWeb3();
+      const web3 = await getWeb3(this);
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-      
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
@@ -49,13 +48,13 @@ class App extends Component {
       let listProposal = [];
       if(userRole === CONSTANTS.USER_ROLE.VOTER){
         await Promise.all(listProposalID.map(async (proposalID) => {
-          let proposalString = await contract.methods.getOneProposal(parseInt(proposalID.returnValues.proposalId)).call({from: accounts[0]});
-          listProposal.push({id: proposalID.returnValues.proposalId, desc: proposalString.description});
+          let proposalString = await contract.methods.getOneProposal(parseInt(proposalID.returnValues._proposalId)).call({from: accounts[0]});
+          listProposal.push({id: proposalID.returnValues._proposalId, desc: proposalString.description});
         }));
       }
       else{
         listProposalID.forEach(proposalID => {
-          listProposal.push({id: proposalID.returnValues.proposalId, desc: 'xxx (only visible by voters)'});
+          listProposal.push({id: proposalID.returnValues._proposalId, desc: 'xxx (only visible by voters)'});
       });
       }
 
@@ -64,12 +63,23 @@ class App extends Component {
       
     } catch (error) {
       // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
+      this.displayMessage(
+        `Failed to load web3, accounts, or contract. Check console for details.`, CONSTANTS.TOAST_MESSAGE_TYPE.ERROR
       );
       console.error(error);
+      this.openMetamask();
     }
   };
+
+  updateAccount = async () => {
+    const accounts = await this.state.web3.eth.getAccounts();
+    const userRole = this.getRole(accounts[0], this.state.owner, this.state.listVoterAddress);
+    console.log(accounts);
+    console.log(userRole);
+    
+    this.setState({accounts, userRole});
+    this.displayMessage("Votre compte metamask a été mis à jour", CONSTANTS.TOAST_MESSAGE_TYPE.INFO); 
+  }
 
   addVoter = async () => {
     const {accounts, contract} = this.state;
@@ -90,7 +100,7 @@ class App extends Component {
       //clear input
       document.getElementById("address_new_voter_value").value = '';
     } catch (error) {
-      this.diplayErrorMessage('Une erreur est survenue');
+      this.displayMessage('Une erreur est survenue', CONSTANTS.TOAST_MESSAGE_TYPE.ERROR);
       console.error(error);
     }  
   }
@@ -112,13 +122,13 @@ class App extends Component {
       let listProposal = [];
       if(this.state.userRole === CONSTANTS.USER_ROLE.VOTER){
         await Promise.all(listProposalID.map(async (proposalID) => {
-          let proposalString = await contract.methods.getOneProposal(parseInt(proposalID.returnValues.proposalId)).call({from: accounts[0]});
-          listProposal.push({id: proposalID.returnValues.proposalId, desc: proposalString.description});
+          let proposalString = await contract.methods.getOneProposal(parseInt(proposalID.returnValues._proposalId)).call({from: accounts[0]});
+          listProposal.push({id: proposalID.returnValues._proposalId, desc: proposalString.description});
         }));
       }
       else{
         listProposalID.forEach(proposalID => {
-          listProposal.push({id: proposalID.returnValues.proposalId, desc: 'xxx (only visible by voters)'});
+          listProposal.push({id: proposalID.returnValues._proposalId, desc: 'xxx (only visible by voters)'});
       });
       }
 
@@ -127,7 +137,7 @@ class App extends Component {
       //clear input
       document.getElementById("new_proposal_value").value = '';
     } catch (error) {
-      this.diplayErrorMessage('Une erreur est survenue');
+      this.displayMessage('Une erreur est survenue', CONSTANTS.TOAST_MESSAGE_TYPE.ERROR);
       console.error(error);
     }  
   }
@@ -147,11 +157,8 @@ class App extends Component {
       const listVote = await contract.getPastEvents('Voted', option);
 
       this.setState({listVote:listVote});
-
-      //clear input
-      document.getElementById("set_vote_value").value = '';
     } catch (error) {
-      this.diplayErrorMessage('Une erreur est survenue');
+      this.displayMessage('Une erreur est survenue', CONSTANTS.TOAST_MESSAGE_TYPE.ERROR);
       console.error(error);
     }  
   }
@@ -197,7 +204,7 @@ class App extends Component {
         this.setState({worflowStatus:newWorkFlowStatus});
 
     } catch (error) {
-      this.diplayErrorMessage('Une erreur est survenue');
+      this.displayMessage('Une erreur est survenue', CONSTANTS.TOAST_MESSAGE_TYPE.ERROR);
       console.error(error);
     }
   }
@@ -210,7 +217,7 @@ class App extends Component {
     else{
         let isVoter = false;
         listVoterAddress.forEach(address => {
-            if(userAddress === address.returnValues.voterAddress){
+            if(userAddress === address.returnValues._voterAddress){
               isVoter = true;
             }
         });
@@ -219,19 +226,22 @@ class App extends Component {
     }
   }
 
-  diplayErrorMessage(message){
-    document.getElementById("error-message").innerHTML = message;
-    document.getElementById("error-message").classList.remove('hide');
+  displayMessage(message, messageTypeClassName){
+    document.getElementById("toast-message").innerHTML = message;
+    document.getElementById("toast-message").removeAttribute('class');
+    document.getElementById("toast-message").classList.add(messageTypeClassName);
 
     setTimeout(() => {
-      document.getElementById("error-message").classList.add('hide');
+      document.getElementById("toast-message").classList.add('hide');
     }, 10000);
   }
 
 
   render() {
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+      return  <div className="App">
+                <Header addr={this.state.accounts} userRole={this.state.userRole} />
+              </div>
     }
     return (
       <div className="App">
@@ -241,8 +251,8 @@ class App extends Component {
             <WorkFlowStatus  worflowstatus={this.state.worflowStatus} userRole={this.state.userRole}
                             switchStatus={this.switchStatus} />
           
-            <Actions  worflowstatus={this.state.worflowStatus} userRole={this.state.userRole}
-                      addVoter={this.addVoter} addProposal={this.addProposal} setVote={this.setVote} />
+            <Actions  worflowstatus={this.state.worflowStatus} userRole={this.state.userRole} listVote={this.state.listVote}
+                      addVoter={this.addVoter} addProposal={this.addProposal} setVote={this.setVote} accounts={this.state.accounts} />
           <div className="clearfix"></div>
         </section>
         

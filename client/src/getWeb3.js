@@ -1,7 +1,10 @@
 import Web3 from "web3";
 
-const getWeb3 = () =>
+const getWeb3 = (_app) =>
   new Promise((resolve, reject) => {
+
+    let app = _app;
+    
     // Wait for loading completion to avoid race conditions with web3 injection timing.
     window.addEventListener("load", async () => {
       // Modern dapp browsers...
@@ -13,10 +16,10 @@ const getWeb3 = () =>
           // Accounts now exposed
           resolve(web3);
           window.ethereum.on('disconnect',function(){
-            alert("il faut se connecter");
+            window.location.reload();
           });
           window.ethereum.on('accountsChanged',function(){
-            window.location.reload();
+            app.updateAccount();
           });     
           window.ethereum.on('chainChanged',function(){
             window.location.reload();
