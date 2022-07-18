@@ -85,7 +85,7 @@ contract Voting is Ownable {
     /// @dev We have limited the number of proposals in order to avoid DDoS attack
     function addProposal(string memory _desc) external onlyVoters {
         require(workflowStatus == WorkflowStatus.ProposalsRegistrationStarted, 'Proposals are not allowed yet');
-        require(nbProposalsAdded < 5, 'Le quota maximum de proposition est atteint');
+        require(nbProposalsAdded < 100, 'Le quota maximum de proposition est atteint');
         require(keccak256(abi.encode(_desc)) != keccak256(abi.encode("")), 'Vous ne pouvez pas ne rien proposer'); // facultatif
         // voir que desc est different des autres
 

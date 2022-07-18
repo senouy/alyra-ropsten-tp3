@@ -3,6 +3,19 @@
 
 [![N|Solid](https://alyra.fr/wp-content/uploads/2019/06/logo-titre-alyra-bleu-transparent-64px_v3.png)](https://github.com/senouy/alyra-ropsten-tp2)
 
+## Démo de la Dapp
+
+https://www.loom.com/share/be6b3803c9414c59b08a116ad40b67df
+
+## Dapp déployée sur le cloud
+
+Le front est déployé sur github à l'adresse : https://senouy.github.io/alyra-ropsten-tp3
+
+Le back est déployé sur le réseau ropsten via la commande : 
+```sh
+truffle migrate --network ropsten
+```
+
 ## Installation
 
 Cloner le projet depuis le repository public https://github.com/senouy/alyra-ropsten-tp3
@@ -12,7 +25,7 @@ Cloner le projet depuis le repository public https://github.com/senouy/alyra-rop
 Installer et lancer le projet react en local
 
 ```sh
-cd /clients/
+cd alyra-ropsten-tp3/clients
 npm install
 npm run start
 ```
@@ -26,7 +39,7 @@ ganache
 
 Déployer le smart contract en local
 ```sh
-cd /truflle/
+cd ../truflle
 truffle migrate
 ```
 
