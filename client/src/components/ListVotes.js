@@ -35,7 +35,7 @@ export default class ListVotes extends React.Component {
                   </table>;
           }
           else{
-            return <em>"Pas de vote enregistré"</em>
+            return <em>Pas de vote enregistré</em>
           }
         }
 

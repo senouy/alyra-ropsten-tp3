@@ -35,7 +35,7 @@ export default class ListProposals extends React.Component {
                     </table>;
           }
           else{
-            return <em>"Pas de proposition enregistrée"</em>
+            return <em>Pas de proposition enregistrée</em>
           }
         }
 

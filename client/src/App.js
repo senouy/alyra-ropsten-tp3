@@ -74,8 +74,6 @@ class App extends Component {
   updateAccount = async () => {
     const accounts = await this.state.web3.eth.getAccounts();
     const userRole = this.getRole(accounts[0], this.state.owner, this.state.listVoterAddress);
-    console.log(accounts);
-    console.log(userRole);
     
     this.setState({accounts, userRole});
     this.displayMessage("Votre compte metamask a été mis à jour", CONSTANTS.TOAST_MESSAGE_TYPE.INFO); 
@@ -199,9 +197,12 @@ class App extends Component {
         document.getElementById("workflow-status").classList.add('blink');
         setTimeout(() => {
           document.getElementById("workflow-status").classList.remove('blink');
-        }, 3000);
+        }, 7000);
 
-        this.setState({worflowStatus:newWorkFlowStatus});
+        setTimeout(() => {
+          this.setState({worflowStatus:newWorkFlowStatus});
+        }, 2500);
+        
 
     } catch (error) {
       this.displayMessage('Une erreur est survenue', CONSTANTS.TOAST_MESSAGE_TYPE.ERROR);

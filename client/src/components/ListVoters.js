@@ -23,7 +23,7 @@ export default class ListVoters extends React.Component {
                     </div>;
           }
           else{
-            return <em>"Pas de votant enregistré"</em>
+            return <em>Pas de votant enregistré</em>
           }
         }
 
